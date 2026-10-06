@@ -27,6 +27,9 @@ import {
 } from 'lucide-react';
 
 const API_KEY_STORAGE = 'ps_custom_api_key';
+const DEFAULT_API_KEY =
+  (import.meta.env.VITE_PAGESPEED_API_KEY as string | undefined)?.trim() ||
+  'AIzaSyDXzPztZNtJY9uEkXiyMpnScaw6q1rnq24';
 
 export const App: React.FC = () => {
   // Main data states
@@ -42,7 +45,7 @@ export const App: React.FC = () => {
   const [isHistoryDrawerOpen, setIsHistoryDrawerOpen] = useState<boolean>(false);
 
   // Settings & History
-  const [apiKey, setApiKey] = useState<string>('');
+  const [apiKey, setApiKey] = useState<string>(DEFAULT_API_KEY);
   const [history, setHistory] = useState<AuditHistoryEntry[]>([]);
 
   // Audit list filter states
@@ -52,8 +55,12 @@ export const App: React.FC = () => {
   // Load API Key & History on mount
   useEffect(() => {
     try {
-      const storedKey = localStorage.getItem(API_KEY_STORAGE) || '';
-      setApiKey(storedKey);
+      const storedKey = localStorage.getItem(API_KEY_STORAGE);
+      if (storedKey && storedKey.trim()) {
+        setApiKey(storedKey.trim());
+      } else {
+        setApiKey(DEFAULT_API_KEY);
+      }
       setHistory(PageSpeedService.getHistory());
     } catch {
       // Ignore storage errors
@@ -103,11 +110,21 @@ export const App: React.FC = () => {
 
   // API Key saving
   const handleSaveApiKey = (key: string) => {
-    setApiKey(key);
-    try {
-      localStorage.setItem(API_KEY_STORAGE, key);
-    } catch {
-      // ignore
+    const trimmed = key.trim();
+    if (trimmed) {
+      setApiKey(trimmed);
+      try {
+        localStorage.setItem(API_KEY_STORAGE, trimmed);
+      } catch {
+        // ignore
+      }
+    } else {
+      setApiKey(DEFAULT_API_KEY);
+      try {
+        localStorage.removeItem(API_KEY_STORAGE);
+      } catch {
+        // ignore
+      }
     }
   };
 

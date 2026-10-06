@@ -42,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({
           title="Configure Google PageSpeed API Key"
         >
           <Key className={`w-3.5 h-3.5 ${hasApiKey ? 'text-emerald-600' : 'text-slate-500'}`} />
-          <span>{hasApiKey ? 'Custom API Key Active' : 'API Key'}</span>
+          <span>{hasApiKey ? 'API Key Active' : 'API Key'}</span>
         </button>
       </div>
 

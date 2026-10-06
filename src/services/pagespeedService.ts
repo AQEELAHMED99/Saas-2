@@ -697,8 +697,13 @@ export class PageSpeedService {
     const catParams = categories.map((c) => `category=${c}`).join('&');
     let endpoint = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=${strategy}&${catParams}`;
 
-    if (apiKey && apiKey.trim()) {
-      endpoint += `&key=${encodeURIComponent(apiKey.trim())}`;
+    const activeKey =
+      (apiKey && apiKey.trim()) ||
+      (import.meta.env.VITE_PAGESPEED_API_KEY as string | undefined)?.trim() ||
+      'AIzaSyDXzPztZNtJY9uEkXiyMpnScaw6q1rnq24';
+
+    if (activeKey) {
+      endpoint += `&key=${encodeURIComponent(activeKey)}`;
     }
 
     const controller = new AbortController();

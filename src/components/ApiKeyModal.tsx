@@ -63,16 +63,16 @@ export const ApiKeyModal: React.FC<ApiKeyModalProps> = ({
 
         {/* Content */}
         <form onSubmit={handleSave} className="p-5 space-y-4">
-          <div className="bg-blue-50/80 border border-blue-200/60 rounded-xl p-3.5 text-xs text-blue-900 flex items-start gap-2.5 leading-relaxed">
-            <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+          <div className="bg-emerald-50/80 border border-emerald-200/60 rounded-xl p-3.5 text-xs text-emerald-900 flex items-start gap-2.5 leading-relaxed">
+            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
             <div>
-              Google PageSpeed Insights API works automatically without a key for standard usage. Adding your own free API key unlocks higher concurrency and prevents public rate limits.
+              Google PageSpeed Insights API is active and configured for high concurrency. You can keep the default key or supply a custom one below.
             </div>
           </div>
 
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
-              API Key (stored locally in browser)
+              API Key (Google Cloud Console)
             </label>
             <input
               type="password"
@@ -98,10 +98,10 @@ export const ApiKeyModal: React.FC<ApiKeyModalProps> = ({
               <button
                 type="button"
                 onClick={handleClear}
-                className="inline-flex items-center gap-1 text-rose-500 hover:text-rose-700"
+                className="inline-flex items-center gap-1 text-rose-500 hover:text-rose-700 cursor-pointer"
               >
                 <Trash2 className="w-3 h-3" />
-                <span>Remove</span>
+                <span>Reset to Default</span>
               </button>
             )}
           </div>
